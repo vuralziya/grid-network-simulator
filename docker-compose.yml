@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  db:
+    image: couchbase
+    ports:
+      - "8091-8095:8091-8095"
+      - "11210:11210"
+    volumes:
+      - "./wait-for-couchbase.sh:/wait-for-couchbase.sh"
+    command:
+      - /wait-for-couchbase.sh
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://Administrator:password@localhost:8091/pools/default/buckets/default"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  grid-network-simulator:
+    environment:
+      - COUCHBASE_HOST=grid-network-simulator_db_1
+    build: .
+    depends_on:
+      - db
+    ports:
+      - 8001:8001

@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: grid-network-simulator
+  jackson:
+    default-property-inclusion: non_null
+    deserialization:
+      fail-on-unknown-properties: false
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+  lifecycle:
+    timeout-per-shutdown-phase: 10s
+
+server:
+  port: 8004
+  compression:
+    enabled: true
+  http2:
+    enabled: true
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,info
+  endpoint:
+    health:
+      show-details: always
+      group:
+        readiness:
+          include: readinessState,couchbase
+        liveness:
+          include: livenessState
+      probes:
+        enabled: true
+  health:
+    diskspace:
+      enabled: false
+
+couchbase:
+  hosts: ${COUCHBASE_HOST:localhost}
+  username: Administrator
+  password: password
+  bucketName: SolarGrid
+  kvTimeout: 3000
+  connectTimeout: 15000
+  queryTimeout: 5000
+  viewTimeout: 5000
