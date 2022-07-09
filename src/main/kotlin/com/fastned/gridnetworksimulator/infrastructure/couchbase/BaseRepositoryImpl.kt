@@ -65,7 +65,7 @@ abstract class BaseRepositoryImpl<TId, TDocument : AggregateRoot<TDocument>>(
             collection.replace(id, document, ReplaceOptions.replaceOptions().cas(document.cas!!))
                 .awaitFirstOrNull()
         }
-        //TODO kafkaDomainEventPublisher.publishForAggregate(document.domainEvents(), id)
+        logger.info(document.domainEvents().toString())
     }
 
     override suspend fun delete(id: TId) {
