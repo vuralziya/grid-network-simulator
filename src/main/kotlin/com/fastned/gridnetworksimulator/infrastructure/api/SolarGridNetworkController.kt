@@ -58,9 +58,9 @@ class SolarGridNetworkController(private val commandBus: CommandBus, private val
     @ResponseStatus(HttpStatus.NO_CONTENT)
     suspend fun removeSolarGrid(
         @RequestParam userId: String,
-        @RequestBody solarGridRequest: SolarGridRequest
+        @RequestBody solarGridName: String
     ) {
-        return commandBus.executeCommandAsync(RemoveSolarGrid(userId, solarGridRequest.toSolarGrid()))
+        return commandBus.executeCommandAsync(RemoveSolarGrid(userId, solarGridName))
     }
 
     @GetMapping("/output")

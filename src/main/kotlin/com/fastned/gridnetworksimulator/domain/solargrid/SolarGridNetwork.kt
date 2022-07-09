@@ -51,6 +51,23 @@ class SolarGridNetwork private constructor(
         registerEvent(SolarGridNetworkUpdated(userId, this.id))
     }
 
+    fun addSolarGridToNetwork(solarGrid: SolarGrid) {
+        if (solarGrids.contains(solarGrid)) {
+            return
+        }
+        solarGrids.add(solarGrid)
+        registerEvent(SolarGridAdded(solarGrid.name))
+    }
+
+    fun removeSolarGridFromNetwork(solarGridName: String) {
+        if (!solarGrids.map { it.name }.contains(solarGridName)) {
+            return
+        }
+        val solarGrid = solarGrids.first { it.name == solarGridName }
+        solarGrids.remove(solarGrid)
+        registerEvent(SolarGridRemoved(solarGrid.name))
+    }
+
     private fun calculateEnergyByDay(ageAsDays: Long, elapsedDays: Long): BigDecimal {
         if (ageAsDays + elapsedDays <= DURATION_UNTIL_GRID_IS_READY) {
             return BigDecimal.ZERO;
@@ -78,21 +95,5 @@ class SolarGridNetwork private constructor(
                         .multiply(BigDecimal.valueOf(0.005)))) * sunHoursPerDay
         }
         return sum
-    }
-
-    fun addSolarGridToNetwork(solarGrid: SolarGrid) {
-        if (solarGrids.contains(solarGrid)) {
-            return
-        }
-        solarGrids.add(solarGrid)
-        registerEvent(SolarGridAdded(solarGrid.name))
-    }
-
-    fun removeSolarGridFromNetwork(solarGrid: SolarGrid) {
-        if (!solarGrids.contains(solarGrid)) {
-            return
-        }
-        solarGrids.remove(solarGrid)
-        registerEvent(SolarGridRemoved(solarGrid.name))
     }
 }

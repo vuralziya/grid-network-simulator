@@ -14,9 +14,9 @@
 	<name>grid-network-simulator</name>
 	<description>This app calculates optimal energy output of solar grids network.</description>
 	<properties>
-		<java.version>18</java.version>
+		<java.version>15</java.version>
 		<kotlin.version>1.6.21</kotlin.version>
-		<couchbase-client-version>3.3.2</couchbase-client-version>
+		<couchbase-client-version>3.1.3dd</couchbase-client-version>
 		<kediatr-version>1.0.17</kediatr-version>
 		<springfox.version>3.0.0</springfox.version>
 	</properties>
@@ -68,6 +68,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains.kotlinx</groupId>
+			<artifactId>kotlinx-coroutines-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

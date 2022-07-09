@@ -8,7 +8,7 @@ import com.trendyol.kediatr.AsyncCommandHandler
 import com.trendyol.kediatr.Command
 import org.springframework.stereotype.Service
 
-data class RemoveSolarGrid(val userId: String, val solarGrid: SolarGrid) : Command
+data class RemoveSolarGrid(val userId: String, val solarGridName: String) : Command
 
 @Service
 class RemoveSolarGridCommandHandler(private val solarGridNetworkRepository: SolarGridNetworkRepository) :
@@ -18,7 +18,7 @@ class RemoveSolarGridCommandHandler(private val solarGridNetworkRepository: Sola
         with(command) {
             val solarGridNetworkId = SolarGridNetworkId.create(userId)
             val solarGridNetwork = solarGridNetworkRepository.load(solarGridNetworkId.value) ?: return
-            solarGridNetwork.removeSolarGridFromNetwork(solarGrid)
+            solarGridNetwork.removeSolarGridFromNetwork(solarGridName)
             solarGridNetworkRepository.save(solarGridNetwork)
         }
     }
