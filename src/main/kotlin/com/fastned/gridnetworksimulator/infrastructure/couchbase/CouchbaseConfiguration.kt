@@ -44,7 +44,7 @@ class CouchbaseConfiguration(
     fun cluster(clusterEnvironment: ClusterEnvironment): ReactiveCluster {
         val authenticator = PasswordAuthenticator.builder().username(couchbaseProperties.username)
             .password(couchbaseProperties.password) // enables only the PLAIN authentication mechanism, used with LDAP
-            .enablePlainSaslMechanism()
+            .onlyEnablePlainSaslMechanism()
             .build()
         return ReactiveCluster.connect(
             couchbaseProperties.hosts.joinToString(","),
